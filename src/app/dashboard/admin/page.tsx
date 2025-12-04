@@ -10,7 +10,7 @@ export default async function AdminDashboard() {
   const session = await auth();
 
   // @ts-ignore
-  if (!session?.user || session.user.role !== "ADMIN") {
+  if (!session?.user || session.user.role !== "admin") {
     redirect("/login");
   }
 
@@ -33,8 +33,8 @@ export default async function AdminDashboard() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Admin Dashboard</h1>
-          <p className="text-muted-foreground">Manage vendors, jobs, and system settings</p>
+          <h1 className="text-3xl font-bold text-black">Admin Dashboard</h1>
+          <p className="text-gray-600">Manage vendors, jobs, and system settings</p>
         </div>
       </div>
 
@@ -83,6 +83,76 @@ export default async function AdminDashboard() {
         </Card>
       </div>
 
+      <Card>
+        <CardHeader>
+          <CardTitle>Payments & Transactions</CardTitle>
+          <CardDescription>All payment records and job transactions</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {allJobs.length === 0 ? (
+            <p className="text-center py-8 text-muted-foreground">No payments yet</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="border-b">
+                    <th className="text-left p-3 font-medium text-sm">Job ID</th>
+                    <th className="text-left p-3 font-medium text-sm">Vendor</th>
+                    <th className="text-left p-3 font-medium text-sm">Customer</th>
+                    <th className="text-left p-3 font-medium text-sm">Vehicle No</th>
+                    <th className="text-left p-3 font-medium text-sm">Amount</th>
+                    <th className="text-left p-3 font-medium text-sm">Status</th>
+                    <th className="text-left p-3 font-medium text-sm">Approval Code</th>
+                    <th className="text-left p-3 font-medium text-sm">Date</th>
+                    <th className="text-left p-3 font-medium text-sm">Paid At</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {allJobs
+                    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+                    .map((job) => {
+                      const vendor = mockStore.users.findById(job.vendorId);
+                      return (
+                        <tr key={job.id} className="border-b hover:bg-muted/50">
+                          <td className="p-3 text-sm font-mono">{job.id.slice(0, 8)}...</td>
+                          <td className="p-3 text-sm">{vendor?.name || "Unknown"}</td>
+                          <td className="p-3 text-sm">{job.customerName}</td>
+                          <td className="p-3 text-sm font-mono">{job.vehicleNo}</td>
+                          <td className="p-3 text-sm font-semibold">${job.amount.toFixed(2)}</td>
+                          <td className="p-3">
+                            <span
+                              className={`inline-block rounded-full px-2 py-1 text-xs font-medium ${
+                                job.status === "paid"
+                                  ? "bg-green-100 text-green-800"
+                                  : job.status === "completed"
+                                    ? "bg-blue-100 text-blue-800"
+                                    : "bg-yellow-100 text-yellow-800"
+                              }`}
+                            >
+                              {job.status}
+                            </span>
+                          </td>
+                          <td className="p-3 text-sm font-mono">
+                            {job.approvalCode || (
+                              <span className="text-muted-foreground">Pending</span>
+                            )}
+                          </td>
+                          <td className="p-3 text-sm text-muted-foreground">
+                            {new Date(job.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="p-3 text-sm text-muted-foreground">
+                            {job.paidAt ? new Date(job.paidAt).toLocaleDateString() : "-"}
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </tbody>
+              </table>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
@@ -94,7 +164,7 @@ export default async function AdminDashboard() {
               {vendors.length === 0 ? (
                 <p className="text-center py-8 text-muted-foreground">No vendors registered</p>
               ) : (
-                vendors.map((vendor) => (
+                vendors.slice(0, 5).map((vendor) => (
                   <div key={vendor.id} className="flex items-center justify-between border-b pb-4 last:border-0">
                     <div>
                       <p className="font-medium">{vendor.name}</p>
@@ -113,6 +183,11 @@ export default async function AdminDashboard() {
                     </div>
                   </div>
                 ))
+              )}
+              {vendors.length > 5 && (
+                <Link href="/dashboard/admin/vendors" className="block text-center text-sm text-primary hover:underline">
+                  View all vendors
+                </Link>
               )}
             </div>
           </CardContent>

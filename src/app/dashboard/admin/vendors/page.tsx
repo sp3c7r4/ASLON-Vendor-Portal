@@ -18,7 +18,7 @@ export default function VendorsPage() {
   }, []);
 
   // @ts-ignore
-  if (session?.user?.role !== "ADMIN") {
+  if (session?.user?.role !== "admin") {
     return null;
   }
 

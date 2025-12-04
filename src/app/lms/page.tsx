@@ -10,7 +10,7 @@ export default async function LMSPage() {
   const session = await auth();
 
   // @ts-ignore
-  if (!session?.user || session.user.role !== "VENDOR") {
+  if (!session?.user || session.user.role !== "vendor") {
     redirect("/login");
   }
 
@@ -30,8 +30,8 @@ export default async function LMSPage() {
   return (
     <div className="space-y-8">
       <div>
-        <h1 className="text-3xl font-bold">Learning Management System</h1>
-        <p className="text-muted-foreground">Complete courses to improve your skills</p>
+        <h1 className="text-3xl font-bold text-black">Learning Management System</h1>
+        <p className="text-gray-600">Complete courses to improve your skills</p>
       </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

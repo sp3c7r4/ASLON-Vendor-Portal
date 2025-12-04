@@ -51,7 +51,7 @@ export default function ForumPage() {
 
   const handleDeletePost = (postId: string) => {
     // @ts-ignore
-    if (session?.user?.role !== "ADMIN") return;
+    if (session?.user?.role !== "admin") return;
     mockStore.forumPosts.delete(postId);
     setPosts(mockStore.forumPosts.getAll());
     toast({
@@ -61,7 +61,7 @@ export default function ForumPage() {
   };
 
   // @ts-ignore
-  if (!session?.user || session.user.role !== "VENDOR") {
+  if (!session?.user || session.user.role !== "vendor") {
     router.push("/login");
     return null;
   }
@@ -70,8 +70,8 @@ export default function ForumPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Forum</h1>
-          <p className="text-muted-foreground">Discuss with other vendors</p>
+          <h1 className="text-3xl font-bold text-black">Forum</h1>
+          <p className="text-gray-600">Discuss with other vendors</p>
         </div>
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
@@ -136,7 +136,7 @@ export default function ForumPage() {
                     </div>
                   </div>
                   {/* @ts-ignore */}
-                  {session?.user?.role === "ADMIN" && (
+                  {session?.user?.role === "admin" && (
                     <Button
                       variant="ghost"
                       size="icon"

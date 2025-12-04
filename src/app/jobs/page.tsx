@@ -10,7 +10,7 @@ export default async function JobsPage() {
   const session = await auth();
 
   // @ts-ignore
-  if (!session?.user || session.user.role !== "VENDOR") {
+  if (!session?.user || session.user.role !== "vendor") {
     redirect("/login");
   }
 
@@ -20,8 +20,8 @@ export default async function JobsPage() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Jobs</h1>
-          <p className="text-muted-foreground">Manage your speedlimiter jobs</p>
+          <h1 className="text-3xl font-bold text-black">Jobs</h1>
+          <p className="text-gray-600">Manage your speedlimiter jobs</p>
         </div>
         <Link href="/jobs/new">
           <Button>

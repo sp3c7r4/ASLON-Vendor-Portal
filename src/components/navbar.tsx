@@ -37,39 +37,39 @@ export function Navbar({ user }: NavbarProps) {
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center gap-8">
-            <Link href="/dashboard" className="text-xl font-bold text-primary">
+            <Link href="/dashboard" className="text-xl font-bold text-black">
               ASLON Portal
             </Link>
             {isVendor && (
               <div className="flex gap-4">
                 <Link
                   href="/dashboard/vendor"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === "/dashboard/vendor" ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname === "/dashboard/vendor" ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/jobs"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname?.startsWith("/jobs") ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname?.startsWith("/jobs") ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Jobs
                 </Link>
                 <Link
                   href="/lms"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname?.startsWith("/lms") ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname?.startsWith("/lms") ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   LMS
                 </Link>
                 <Link
                   href="/forum"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname?.startsWith("/forum") ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname?.startsWith("/forum") ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Forum
@@ -80,24 +80,24 @@ export function Navbar({ user }: NavbarProps) {
               <div className="flex gap-4">
                 <Link
                   href="/dashboard/admin"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname === "/dashboard/admin" ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname === "/dashboard/admin" ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/dashboard/admin/vendors"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname?.startsWith("/dashboard/admin/vendors") ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname?.startsWith("/dashboard/admin/vendors") ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Vendors
                 </Link>
                 <Link
                   href="/dashboard/admin/announcements"
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    pathname?.startsWith("/dashboard/admin/announcements") ? "text-primary" : "text-muted-foreground"
+                  className={`text-sm font-medium transition-colors hover:text-black ${
+                    pathname?.startsWith("/dashboard/admin/announcements") ? "text-black font-semibold" : "text-gray-600"
                   }`}
                 >
                   Announcements
@@ -106,11 +106,18 @@ export function Navbar({ user }: NavbarProps) {
             )}
           </div>
           <div className="flex items-center gap-4">
+            <Button
+              variant="destructive"
+              onClick={handleSignOut}
+              className="text-white bg-red-600 hover:bg-red-700"
+            >
+              Log out
+            </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="relative h-8 w-8 rounded-full">
-                  <Avatar className="h-8 w-8">
-                    <AvatarFallback>
+                <Button variant="ghost" className="relative h-10 w-10 rounded-full p-0">
+                  <Avatar className="h-10 w-10">
+                    <AvatarFallback className="bg-blue-600 text-white">
                       {user?.name?.charAt(0).toUpperCase() || "U"}
                     </AvatarFallback>
                   </Avatar>
@@ -119,18 +126,16 @@ export function Navbar({ user }: NavbarProps) {
               <DropdownMenuContent className="w-56" align="end" forceMount>
                 <DropdownMenuLabel className="font-normal">
                   <div className="flex flex-col space-y-1">
-                    <p className="text-sm font-medium leading-none">{user?.name}</p>
-                    <p className="text-xs leading-none text-muted-foreground">{user?.email}</p>
+                    <p className="text-sm font-medium leading-none text-black">{user?.name}</p>
+                    <p className="text-xs leading-none text-gray-600">{user?.email}</p>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 {isVendor && (
                   <DropdownMenuItem asChild>
-                    <Link href="/dashboard/vendor/profile">Profile</Link>
+                    <Link href="/dashboard/vendor/profile" className="text-black">Profile</Link>
                   </DropdownMenuItem>
                 )}
-                <DropdownMenuSeparator />
-                <DropdownMenuItem onClick={handleSignOut}>Log out</DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>

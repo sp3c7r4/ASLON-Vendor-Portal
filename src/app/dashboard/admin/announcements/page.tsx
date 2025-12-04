@@ -25,7 +25,7 @@ export default function AnnouncementsPage() {
   }, []);
 
   // @ts-ignore
-  if (session?.user?.role !== "ADMIN") {
+  if (session?.user?.role !== "admin") {
     return null;
   }
 

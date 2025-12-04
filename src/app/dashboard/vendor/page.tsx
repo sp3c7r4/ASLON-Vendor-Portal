@@ -29,8 +29,8 @@ export default async function VendorDashboard() {
     <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Welcome back, {user?.name || "Vendor"}!</h1>
-          <p className="text-muted-foreground">Manage your jobs and track your progress</p>
+          <h1 className="text-3xl font-bold text-black">Welcome back, {user?.name || "Vendor"}!</h1>
+          <p className="text-gray-600">Manage your jobs and track your progress</p>
         </div>
         <Link href="/jobs/new">
           <Button>

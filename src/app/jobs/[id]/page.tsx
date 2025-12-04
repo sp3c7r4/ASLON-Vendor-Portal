@@ -101,8 +101,8 @@ export default function JobDetailPage() {
     <div className="max-w-3xl mx-auto space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold">Job Details</h1>
-          <p className="text-muted-foreground">Job ID: {job.id}</p>
+          <h1 className="text-3xl font-bold text-black">Job Details</h1>
+          <p className="text-gray-600">Job ID: {job.id}</p>
         </div>
         <span
           className={`inline-block rounded-full px-3 py-1 text-sm font-medium ${
