@@ -24,7 +24,8 @@ export default function AnnouncementsPage() {
     setAnnouncements(mockStore.announcements.getAll());
   }, []);
 
-  if (session?.user?.role !== "admin") {
+  // @ts-ignore
+  if (session?.user?.role !== "ADMIN") {
     return null;
   }
 

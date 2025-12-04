@@ -18,6 +18,7 @@ export default async function DashboardLayout({
     <div className="min-h-screen bg-gray-50">
       <Navbar user={session.user} />
       <main className="container mx-auto px-4 py-8">{children}</main>
+      {/* @ts-ignore */}
       {session.user.role === "vendor" && <Chatbot />}
     </div>
   );

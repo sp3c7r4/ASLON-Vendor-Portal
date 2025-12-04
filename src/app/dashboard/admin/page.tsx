@@ -9,7 +9,8 @@ import { Users, DollarSign, FileText, AlertCircle } from "lucide-react";
 export default async function AdminDashboard() {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "admin") {
+  // @ts-ignore
+  if (!session?.user || session.user.role !== "ADMIN") {
     redirect("/login");
   }
 

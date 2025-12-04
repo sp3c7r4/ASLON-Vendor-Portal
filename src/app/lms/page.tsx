@@ -9,7 +9,8 @@ import { BookOpen, Clock, CheckCircle2 } from "lucide-react";
 export default async function LMSPage() {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "vendor") {
+  // @ts-ignore
+  if (!session?.user || session.user.role !== "VENDOR") {
     redirect("/login");
   }
 

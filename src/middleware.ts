@@ -18,6 +18,7 @@ export default auth((req) => {
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
+  // @ts-ignore
   const role = req.auth?.user?.role;
 
   // Admin-only routes

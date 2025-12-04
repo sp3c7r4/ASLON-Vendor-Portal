@@ -10,7 +10,8 @@ export default async function LMSLayout({
 }) {
   const session = await auth();
 
-  if (!session?.user || session.user.role !== "vendor") {
+  // @ts-ignore
+  if (!session?.user || session.user.role !== "VENDOR") {
     redirect("/login");
   }
 

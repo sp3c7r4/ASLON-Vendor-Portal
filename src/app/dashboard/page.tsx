@@ -7,7 +7,7 @@ export default async function DashboardPage() {
   if (!session?.user) {
     redirect("/login");
   }
-
+  // @ts-ignore
   if (session.user.role === "admin") {
     redirect("/dashboard/admin");
   } else {

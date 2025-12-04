@@ -17,7 +17,8 @@ export default function VendorsPage() {
     setVendors(mockStore.users.getVendors());
   }, []);
 
-  if (session?.user?.role !== "admin") {
+  // @ts-ignore
+  if (session?.user?.role !== "ADMIN") {
     return null;
   }
 

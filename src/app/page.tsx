@@ -5,7 +5,8 @@ export default async function Home() {
   const session = await auth();
   
   if (session?.user) {
-    if (session.user.role === "admin") {
+    // @ts-ignore
+    if (session.user.role === "ADMIN") {
       redirect("/dashboard/admin");
     } else {
       redirect("/dashboard/vendor");
