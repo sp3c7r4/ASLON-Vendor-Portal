@@ -5,7 +5,7 @@ export default auth((req) => {
   const { pathname } = req.nextUrl;
   const isLoggedIn = !!req.auth;
 
-  // Public routes
+  // Public routes - allow access without auth
   if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
     if (isLoggedIn) {
       // @ts-ignore
@@ -15,50 +15,70 @@ export default auth((req) => {
       } else if (role === "vendor") {
         return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
       }
+      // If role is not set, still redirect to dashboard (let page handle it)
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
     return NextResponse.next();
   }
 
-  // Protected routes
+  // Protected routes - require auth
   if (!isLoggedIn) {
-    return NextResponse.redirect(new URL("/login", req.url));
+    const loginUrl = new URL("/login", req.url);
+    // Add return URL to preserve where user wanted to go
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
   }
 
   // @ts-ignore
   const role = req.auth?.user?.role;
 
-  // Skip role checks if role is not set (let the page handle it)
-  if (!role) {
+  // Allow /dashboard to handle its own redirects
+  if (pathname === "/dashboard") {
     return NextResponse.next();
   }
 
   // Admin-only routes
-  if (pathname.startsWith("/dashboard/admin") && role !== "admin") {
-    if (role === "vendor") {
-      return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
+  if (pathname.startsWith("/dashboard/admin")) {
+    if (role !== "admin") {
+      if (role === "vendor") {
+        return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
+      }
+      // No role or unknown role - redirect to dashboard
+      return NextResponse.redirect(new URL("/dashboard", req.url));
     }
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.next();
   }
 
   // Vendor-only routes
   if (
-    (pathname.startsWith("/dashboard/vendor") ||
-      pathname.startsWith("/jobs") ||
-      pathname.startsWith("/forum") ||
-      pathname.startsWith("/lms")) &&
-    role !== "vendor"
+    pathname.startsWith("/dashboard/vendor") ||
+    pathname.startsWith("/jobs") ||
+    pathname.startsWith("/forum") ||
+    pathname.startsWith("/lms")
   ) {
-    if (role === "admin") {
-      return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+    if (role !== "vendor") {
+      if (role === "admin") {
+        return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+      }
+      // No role or unknown role - redirect to dashboard
+      return NextResponse.redirect(new URL("/dashboard", req.url));
     }
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.next();
   }
 
   return NextResponse.next();
 });
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - api (API routes)
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     */
+    "/((?!api|_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
 

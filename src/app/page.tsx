@@ -6,10 +6,14 @@ export default async function Home() {
   
   if (session?.user) {
     // @ts-ignore
-    if (session.user.role === "ADMIN") {
+    const role = session.user.role;
+    if (role === "admin") {
       redirect("/dashboard/admin");
-    } else {
+    } else if (role === "vendor") {
       redirect("/dashboard/vendor");
+    } else {
+      // Invalid role, redirect to login
+      redirect("/login");
     }
   } else {
     redirect("/login");

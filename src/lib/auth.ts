@@ -4,6 +4,7 @@ import { mockStore } from "./mock-data";
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET || "aslon-vendor-portal-secret-key-for-development",
+  trustHost: true, // Required for production deployments
   providers: [
     Credentials({
       credentials: {

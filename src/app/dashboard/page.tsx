@@ -7,11 +7,18 @@ export default async function DashboardPage() {
   if (!session?.user) {
     redirect("/login");
   }
+
   // @ts-ignore
-  if (session.user.role === "admin") {
+  const role = session.user.role;
+
+  // Redirect based on role
+  if (role === "admin") {
     redirect("/dashboard/admin");
-  } else {
+  } else if (role === "vendor") {
     redirect("/dashboard/vendor");
+  } else {
+    // If role is not set, redirect to login to re-authenticate
+    redirect("/login?error=SessionInvalid");
   }
 }
 
