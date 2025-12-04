@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
@@ -24,9 +24,15 @@ interface NavbarProps {
 
 export function Navbar({ user }: NavbarProps) {
   const pathname = usePathname();
+  const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut({ callbackUrl: "/login" });
+    await signOut({ 
+      redirect: false
+    });
+    // Manually redirect to ensure we use the current origin
+    router.push("/login");
+    router.refresh();
   };
 
   const isVendor = user?.role === "vendor";

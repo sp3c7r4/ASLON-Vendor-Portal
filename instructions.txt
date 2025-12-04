@@ -113,12 +113,17 @@ All data is stored in-memory in src/lib/mock-data.ts
 
 ENVIRONMENT VARIABLES
 ---------------------
-Currently, no environment variables are required for the demo.
+For production deployment, set these environment variables:
+
+  NEXTAUTH_SECRET="your-secret-key" (required for production)
+  NEXTAUTH_URL="https://your-production-domain.com" (optional, but recommended)
+
+For local development:
+  NEXTAUTH_SECRET="aslon-vendor-portal-secret-key-for-development" (optional, has default)
+  NEXTAUTH_URL="http://localhost:3000" (optional)
 
 For future database integration:
   DATABASE_URL="your-database-connection-string"
-  NEXTAUTH_SECRET="your-secret-key"
-  NEXTAUTH_URL="http://localhost:3000"
 
 
 BUILDING FOR PRODUCTION
