@@ -1,0 +1,145 @@
+ASLON VENDOR PORTAL - SETUP INSTRUCTIONS
+==========================================
+
+INSTALLATION
+------------
+1. Install dependencies:
+   npm install
+
+2. (Optional) If you want to use a real database in the future:
+   - Update prisma/schema.prisma with your database provider
+   - Set DATABASE_URL in .env file
+   - Run: npx prisma generate && npx prisma migrate dev
+
+3. Start the development server:
+   npm run dev
+
+4. Open your browser and navigate to:
+   http://localhost:3000
+
+
+DEMO CREDENTIALS
+----------------
+Admin Account:
+  Email: admin@example.com
+  Password: admin123
+
+Vendor Account:
+  Email: vendor@example.com
+  Password: vendor123
+
+
+CHANGING ADMIN PASSWORD
+------------------------
+To change the admin password, edit the file:
+  src/lib/mock-data.ts
+
+Find the admin user object and update the password field:
+  {
+    id: "admin-1",
+    email: "admin@example.com",
+    password: "your-new-password",  // Change this
+    name: "Admin User",
+    role: "admin",
+    status: "active",
+    createdAt: new Date(),
+  }
+
+
+FEATURES
+--------
+✓ Authentication (NextAuth with Credentials Provider)
+✓ Role-based access control (Vendor & Admin)
+✓ Vendor Dashboard with job statistics
+✓ Speedlimiter Job Workflow:
+  - Create new jobs
+  - Process payments
+  - Generate unique approval codes (ASLN-XXXX-XXXX)
+  - Download PDF receipts with QR codes
+  - View job history
+✓ Admin Dashboard:
+  - View total revenue
+  - Manage vendors (approve/suspend)
+  - Create announcements
+  - Upload training content (mock)
+✓ LMS Module:
+  - Course list and details
+  - Progress tracking
+  - Certificate download (mock)
+✓ Forum Module:
+  - Create posts and replies
+  - Vendor-only access
+  - Admin moderation
+✓ AI Chatbot:
+  - FAQ responses from JSON
+  - Escalate to admin (creates support ticket)
+  - Bottom-right chat widget
+
+
+TECHNICAL STACK
+---------------
+- Next.js 16 (App Router)
+- TypeScript
+- TailwindCSS + Shadcn UI
+- NextAuth v5 (Credentials Provider)
+- Prisma ORM (schema ready for future DB)
+- pdf-lib (PDF generation)
+- qrcode (QR code generation)
+
+
+PROJECT STRUCTURE
+-----------------
+/app
+  /(auth)          - Login & Register pages
+  /dashboard       - Dashboard layouts
+    /vendor        - Vendor dashboard & profile
+    /admin         - Admin dashboard & management
+  /jobs            - Job management pages
+  /lms             - Learning Management System
+  /forum           - Forum pages
+/components        - React components
+  /ui              - Shadcn UI components
+/lib               - Utilities & mock data
+/prisma            - Database schema
+
+
+MOCK DATA
+---------
+All data is stored in-memory in src/lib/mock-data.ts
+- Data persists during the session
+- Resets on server restart
+- Ready to be replaced with real database queries
+
+
+ENVIRONMENT VARIABLES
+---------------------
+Currently, no environment variables are required for the demo.
+
+For future database integration:
+  DATABASE_URL="your-database-connection-string"
+  NEXTAUTH_SECRET="your-secret-key"
+  NEXTAUTH_URL="http://localhost:3000"
+
+
+BUILDING FOR PRODUCTION
+-----------------------
+npm run build
+npm start
+
+
+NOTES
+-----
+- All features are fully functional with mock data
+- PDF receipts include QR codes
+- Approval codes follow format: ASLN-XXXX-XXXX
+- Chatbot uses FAQ data from src/lib/faq-data.json
+- Support tickets are created when escalating to admin
+- Course certificates are mock downloads
+- All UI components use TailwindCSS and Shadcn UI
+
+
+SUPPORT
+-------
+For issues or questions, refer to the codebase documentation or
+check the implementation in the respective component files.
+

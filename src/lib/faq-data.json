@@ -1,0 +1,45 @@
+{
+  "faqs": [
+    {
+      "question": "How do I create a new job?",
+      "answer": "Go to the Jobs section in your dashboard and click 'Create New Job'. Fill in the customer name and vehicle number, then submit."
+    },
+    {
+      "question": "How do I process payment?",
+      "answer": "After creating a job, you'll see a 'Process Payment' button. Click it to mark the job as paid and generate the approval code."
+    },
+    {
+      "question": "What is an approval code?",
+      "answer": "An approval code is a unique identifier (format: ASLN-XXXX-XXXX) generated for each completed job. It's included in the receipt PDF."
+    },
+    {
+      "question": "How do I download a receipt?",
+      "answer": "After processing payment, you can download the receipt PDF which includes all job details and the approval code with QR code."
+    },
+    {
+      "question": "How do I access training courses?",
+      "answer": "Navigate to the LMS section from your dashboard. You'll see all available courses and can track your progress."
+    },
+    {
+      "question": "How do I get a certificate?",
+      "answer": "Complete a course to 100% progress, then click the 'Download Certificate' button on the course detail page."
+    },
+    {
+      "question": "Can I post in the forum?",
+      "answer": "Yes, vendors can create posts and reply to existing posts in the Forum section. All posts are visible to other vendors."
+    },
+    {
+      "question": "What if I need admin help?",
+      "answer": "Use the chat widget to ask questions. If you need to escalate, click 'Escalate to Admin' to create a support ticket."
+    },
+    {
+      "question": "How do I update my profile?",
+      "answer": "Go to your Profile page from the dashboard menu. You can update your name and other information there."
+    },
+    {
+      "question": "What should I do if my account is suspended?",
+      "answer": "Contact an administrator through the support system. They will review your account status."
+    }
+  ]
+}
+

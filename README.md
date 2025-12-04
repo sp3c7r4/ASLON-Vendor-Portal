@@ -1,36 +1,131 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ASLON Vendor Portal
 
-## Getting Started
+A fully functional Next.js vendor management portal with authentication, job management, LMS, forum, and AI chatbot features.
 
-First, run the development server:
+## Quick Start
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Demo Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**Admin:**
+- Email: `admin@example.com`
+- Password: `admin123`
 
-## Learn More
+**Vendor:**
+- Email: `vendor@example.com`
+- Password: `vendor123`
 
-To learn more about Next.js, take a look at the following resources:
+## Features
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Authentication & Roles
+- ✅ Signup/Login with NextAuth
+- ✅ Vendor and Admin roles
+- ✅ Role-based protected routes
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Vendor Dashboard
+- ✅ Profile management
+- ✅ Job statistics and overview
+- ✅ Announcements feed
 
-## Deploy on Vercel
+### Speedlimiter Job Workflow
+- ✅ Create new jobs (customer name, vehicle number)
+- ✅ Process payment (mock)
+- ✅ Auto-generate unique approval codes (ASLN-XXXX-XXXX)
+- ✅ Generate downloadable PDF receipts with QR codes
+- ✅ View complete job history
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Admin Dashboard
+- ✅ View total revenue (aggregated)
+- ✅ Manage vendors (approve/suspend)
+- ✅ Create announcements
+- ✅ Upload training content (mock)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### LMS Module
+- ✅ Course list and details
+- ✅ Video placeholder with content
+- ✅ Progress tracking (in-memory)
+- ✅ Download certificate (mock)
+
+### Forum Module
+- ✅ Create posts and replies
+- ✅ Vendor-only access
+- ✅ Admin moderation (delete posts)
+
+### AI Chatbot
+- ✅ Chat widget (bottom-right)
+- ✅ Predefined FAQ responses from JSON
+- ✅ "Escalate to admin" creates support ticket
+
+## Tech Stack
+
+- **Next.js 16** (App Router)
+- **TypeScript**
+- **TailwindCSS** + **Shadcn UI**
+- **NextAuth v5** (Credentials Provider)
+- **Prisma ORM** (schema ready for future DB)
+- **pdf-lib** (PDF generation)
+- **qrcode** (QR code generation)
+
+## Project Structure
+
+```
+/app
+  /(auth)          - Login & Register
+  /dashboard       - Dashboards
+    /vendor        - Vendor dashboard & profile
+    /admin         - Admin dashboard & management
+  /jobs            - Job management
+  /lms             - Learning Management System
+  /forum           - Forum
+/components        - React components
+  /ui              - Shadcn UI components
+/lib               - Utilities & mock data
+/prisma            - Database schema
+```
+
+## Mock Data
+
+All data is stored in-memory in `src/lib/mock-data.ts`:
+- Data persists during the session
+- Resets on server restart
+- Ready to be replaced with real database queries
+
+## Database Schema
+
+Prisma schema is included in `/prisma/schema.prisma` for future database integration. Currently, the app uses in-memory mock data.
+
+To use a real database:
+1. Update `prisma/schema.prisma` with your database provider
+2. Set `DATABASE_URL` in `.env`
+3. Run: `npx prisma generate && npx prisma migrate dev`
+
+## Changing Admin Password
+
+Edit `src/lib/mock-data.ts` and update the admin user's password field.
+
+## Environment Variables
+
+No environment variables are required for the demo. For production:
+
+```env
+DATABASE_URL="your-database-connection-string"
+NEXTAUTH_SECRET="your-secret-key"
+NEXTAUTH_URL="http://localhost:3000"
+```
+
+## Building for Production
+
+```bash
+npm run build
+npm start
+```
+
+## License
+
+Private project - ASLON Vendor Portal
