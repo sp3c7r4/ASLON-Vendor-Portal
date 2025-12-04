@@ -8,6 +8,13 @@ export default auth((req) => {
   // Public routes
   if (pathname.startsWith("/login") || pathname.startsWith("/register")) {
     if (isLoggedIn) {
+      // @ts-ignore
+      const role = req.auth?.user?.role;
+      if (role === "admin") {
+        return NextResponse.redirect(new URL("/dashboard/admin", req.url));
+      } else if (role === "vendor") {
+        return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
+      }
       return NextResponse.redirect(new URL("/dashboard", req.url));
     }
     return NextResponse.next();
@@ -21,9 +28,17 @@ export default auth((req) => {
   // @ts-ignore
   const role = req.auth?.user?.role;
 
+  // Skip role checks if role is not set (let the page handle it)
+  if (!role) {
+    return NextResponse.next();
+  }
+
   // Admin-only routes
   if (pathname.startsWith("/dashboard/admin") && role !== "admin") {
-    return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
+    if (role === "vendor") {
+      return NextResponse.redirect(new URL("/dashboard/vendor", req.url));
+    }
+    return NextResponse.redirect(new URL("/dashboard", req.url));
   }
 
   // Vendor-only routes
